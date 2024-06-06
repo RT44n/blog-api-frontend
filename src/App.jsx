@@ -5,7 +5,6 @@ import { Sidebar } from "./components/Sidebar";
 function App() {
   return (
     <>
-      <h1>Blog</h1>
       <Header></Header>
       <Content></Content>
       <Sidebar></Sidebar>
