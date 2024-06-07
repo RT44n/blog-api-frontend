@@ -1,25 +1,27 @@
 import { useEffect, useState } from "react";
 import { PostCard } from "./PostCard";
+
 export const Content = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("backendapi", { mode: "cors" });
+        const response = await fetch("http://localhost:3000/api/posts");
         if (!response.ok) {
-          throw new Error(`Server error: Status ${response.status}`);
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        const newPosts = await response.json();
-        setPosts(newPosts);
+        const data = await response.json();
+        console.log(data);
+        setPosts(data);
         setError(null);
-      } catch (err) {
-        setError(err);
-        setPosts([]);
+      } catch (error) {
+        setError(error.message);
       }
     };
-    fetchPosts();
+
+    fetchData();
   }, []);
 
   return (
@@ -29,7 +31,7 @@ export const Content = () => {
       ) : (
         <>
           {posts.map((post) => (
-            <PostCard key={post._id}></PostCard>
+            <PostCard key={post.title} {...post}></PostCard>
           ))}
         </>
       )}
