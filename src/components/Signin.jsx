@@ -1,18 +1,21 @@
 import { useState } from "react";
+import { useAuth } from "../utilities/auth";
 
 export const Signin = () => {
   const [input, setInput] = useState({
     username: "",
     password: "",
   });
+  const [error, setError] = useState("");
+  const auth = useAuth();
 
   const handleSubmitEvent = (e) => {
     e.preventDefault();
-    if (input.username !== "" && input.password !== "") {
-      console.log("haha");
+    if (input.username === "" || input.password === "") {
+      setError("Please provide a valid input.");
+      return;
     }
-
-    alert("please provide a valid input");
+    auth.loginAction(input);
   };
 
   const handleInput = (e) => {
@@ -21,22 +24,23 @@ export const Signin = () => {
       ...prev,
       [name]: value,
     }));
+    setError("");
   };
 
   return (
     <form onSubmit={handleSubmitEvent}>
       <div className="form_control">
-        <label htmlFor="user-email">Email:</label>
+        <label htmlFor="username">Username</label>
         <input
-          type="email"
-          id="user-email"
-          name="email"
+          type="text"
+          id="username"
+          name="username"
           placeholder="example@yahoo.com"
-          aria-describedby="user-email"
+          aria-describedby="username"
           aria-invalid="false"
           onChange={handleInput}
         />
-        <div id="user-email" className="sr-only">
+        <div id="username" className="sr-only">
           Please enter a valid username. It must contain at least 6 characters.
         </div>
       </div>
@@ -51,9 +55,10 @@ export const Signin = () => {
           onChange={handleInput}
         />
         <div id="user-password" className="sr-only">
-          your password should be more than 6 character
+          Your password should be more than 6 characters.
         </div>
       </div>
+      {error && <p className="error">{error}</p>}
       <button className="btn-submit">Submit</button>
     </form>
   );
