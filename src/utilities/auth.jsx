@@ -4,7 +4,7 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("site") || "");
+  const [token, setToken] = useState(localStorage.getItem("blogToken") || "");
   const navigate = useNavigate();
   const loginAction = async (data) => {
     try {
@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
       if (res.data) {
         setUser(res.data.user);
         setToken(res.token);
-        localStorage.setItem("site", res.token);
+        localStorage.setItem("blogToken", res.token);
         navigate("/");
         return;
       }
@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
   const logOut = () => {
     setUser(null);
     setToken("");
-    localStorage.removeItem("site");
+    localStorage.removeItem("blogToken");
     navigate("/signin");
   };
   return (
