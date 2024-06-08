@@ -1,28 +1,45 @@
 import { useEffect, useState } from "react";
 import { PostCard } from "./PostCard";
+import { useAuth } from "../utilities/auth";
 
 export const Content = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
+  const { user, token } = useAuth();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/api/posts");
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+    if (user) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/user/${user}/posts`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              `HTTP error! Status: ${response.status}, message: ${
+                errorData.message || response.statusText
+              }`
+            );
+          }
+          const data = await response.json();
+          setPosts(data);
+          setError(null);
+        } catch (error) {
+          setError({ message: error.message });
         }
-        const data = await response.json();
-        console.log(data);
-        setPosts(data);
-        setError(null);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }
+  }, [token, user]);
 
   return (
     <>
@@ -31,7 +48,7 @@ export const Content = () => {
       ) : (
         <>
           {posts.map((post) => (
-            <PostCard key={post.title} {...post}></PostCard>
+            <PostCard key={post.title} {...post} />
           ))}
         </>
       )}
