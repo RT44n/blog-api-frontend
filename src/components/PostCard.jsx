@@ -2,7 +2,7 @@ import { TbShare3 } from "react-icons/tb";
 import { MdModeEditOutline } from "react-icons/md";
 import { SlOptionsVertical } from "react-icons/sl";
 
-export const PostCard = ({ author, date, title, text, tag, status }) => {
+export const PostCard = ({ author, date, title, text, tag, status, _id }) => {
   return (
     <div className="p-2 max-w-2xl max-h-60">
       <div className="flex flex-row items-center min-h-4 text-sm space-x-2">

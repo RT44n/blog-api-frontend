@@ -18,12 +18,13 @@ const AuthProvider = ({ children }) => {
         body: JSON.stringify(data),
       });
       const res = await response.json();
+
       if (response.ok && res.token) {
-        setUser(res.id);
+        setUser(res.user);
         setToken(res.token);
 
         localStorage.setItem("blogToken", res.token);
-        localStorage.setItem("user", res.id);
+        localStorage.setItem("user", res.user);
 
         navigate("/");
         return;
