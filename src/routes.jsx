@@ -3,6 +3,7 @@ import { EditPost } from "./components/EditPage";
 import ErrorPage from "./components/ErrorPage";
 import { Signin } from "./components/Signin";
 import AuthProvider from "./utilities/auth";
+import { WritePost } from "./components/WritePage";
 
 const routes = [
   {
@@ -28,6 +29,14 @@ const routes = [
     element: (
       <AuthProvider>
         <EditPost></EditPost>
+      </AuthProvider>
+    ),
+  },
+  {
+    path: "Write",
+    element: (
+      <AuthProvider>
+        <WritePost></WritePost>
       </AuthProvider>
     ),
   },
