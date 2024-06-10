@@ -53,6 +53,10 @@ export const PostCard = ({ author, date, title, text, tag, status, _id }) => {
             className="h-5 w-5 cursor-pointer"
           />
           <SlOptionsVertical className="h-5 w-5" />
+          <dialog>
+            <p>Delete</p>
+            <p>Show on blog</p>
+          </dialog>
         </div>
       </div>
     </div>
