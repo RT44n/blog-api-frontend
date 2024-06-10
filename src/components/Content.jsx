@@ -28,7 +28,6 @@ export const Content = () => {
           }
           const data = await response.json();
           setPosts(data);
-          console.log(data);
           setError(null);
         } catch (error) {
           setError({ message: error.message });
