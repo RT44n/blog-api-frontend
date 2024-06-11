@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../utilities/auth";
 
 export const WritePost = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ export const WritePost = () => {
   //const [status, setStatus] = useState("");
   const [error, setError] = useState(null);
 
-  const user = localStorage.getItem("user");
+  const user = useAuth();
 
   const handleSubmitEvent = async (e) => {
     console.log(e.target.value);

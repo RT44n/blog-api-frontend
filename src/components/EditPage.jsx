@@ -11,22 +11,6 @@ export const EditPost = () => {
   const [status, setStatus] = useState(post.status);
   const [error, setError] = useState(null);
 
-  const tags = [
-    "Artificial Intelligence",
-    "Machine Learning",
-    "Software Development",
-    "Web Development",
-    "Mobile Apps",
-    "Cybersecurity",
-    "Cloud Computing",
-    "Blockchain",
-    "IoT (Internet of Things)",
-    "DevOps",
-    "Programming Languages",
-    "Tech News",
-    "Startups",
-  ];
-
   const handleSubmitEvent = async (e) => {
     e.preventDefault();
     try {
@@ -57,41 +41,49 @@ export const EditPost = () => {
   };
 
   return (
-    <div>
-      <h1>Edit Post</h1>
-      {error && <p style={{ color: "red" }}>{error.message}</p>}
-      <form onSubmit={handleSubmitEvent}>
-        <div>
-          <label htmlFor="title">Title</label>
-          <input
-            id="title"
-            name="title"
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+    <>
+      <h1 className="text-3xl font-bold mb-6">Edit Post</h1>
+      <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            className="bg-lime-800 text-white font-bold py-2 px-4 rounded-full mr-2"
+          >
+            Publish
+          </button>
+          <button
+            onClick={handleSubmitEvent}
+            type="submit"
+            className="bg-lime-800 text-white font-bold py-2 px-4 rounded-full"
+          >
+            Save
+          </button>
         </div>
-        <div>
-          <label htmlFor="text">Text</label>
-          <textarea
-            id="text"
-            name="text"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="status">Publish:</label>
-          <input
-            name="status"
-            id="status"
-            type="checkbox"
-            checked={status}
-            onChange={(e) => setStatus(e.target.checked)}
-          />
-        </div>
-        <button type="submit">Save Changes</button>
-      </form>
-    </div>
+        {error && <p className="text-red-500 mb-4">{error.message}</p>}
+        <form>
+          <div className="h-auto mb-6">
+            <input
+              className="w-full text-3xl py-2 px-4 "
+              name="title"
+              id="title"
+              placeholder="Title"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className="mb-6">
+            <textarea
+              className="w-full text-xl py-2 px-4 min-h-[600px]"
+              name="text"
+              id="text"
+              placeholder="Tell your story..."
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
+          </div>
+        </form>
+      </div>
+    </>
   );
 };

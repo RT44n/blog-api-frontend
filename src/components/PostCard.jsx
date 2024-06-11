@@ -65,8 +65,8 @@ export const PostCard = ({ author, date, title, text, tag, status, _id }) => {
           />
           <MdDelete onClick={handleDeleteClick} />
           {showDialog && (
-            <dialog className=" mx-auto overflow-y-auto flex items-center justify-center backdrop-filter backdrop-blur-sm">
-              <div className="bg-white rounded-lg shadow-lg p-6">
+            <dialog className="bg-white mx-auto overflow-y-auto flex items-center justify-center border-2 border-slate-400 rounded-lg ">
+              <div className="p-6">
                 <p className="text-lg font-semibold mb-4">
                   Are you sure you want to delete this post?
                 </p>

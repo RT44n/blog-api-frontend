@@ -31,6 +31,7 @@ const routes = [
         <EditPost></EditPost>
       </AuthProvider>
     ),
+    errorElement: <ErrorPage />,
   },
   {
     path: "Write",
@@ -39,6 +40,7 @@ const routes = [
         <WritePost></WritePost>
       </AuthProvider>
     ),
+    errorElement: <ErrorPage />,
   },
 ];
 
