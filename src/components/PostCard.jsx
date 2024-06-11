@@ -60,10 +60,11 @@ export const PostCard = ({ author, date, title, text, tag, status, _id }) => {
         <div className="flex flex-row space-x-2">
           <TbShare3 className="h-5 w-5" />
           <MdModeEditOutline
+            data-testid="edit"
             onClick={() => handleEditClick(_id)}
             className="h-5 w-5 cursor-pointer"
           />
-          <MdDelete onClick={handleDeleteClick} />
+          <MdDelete data-testid="delete" onClick={handleDeleteClick} />
           {showDialog && (
             <dialog className="bg-white mx-auto overflow-y-auto flex items-center justify-center border-2 border-slate-400 rounded-lg ">
               <div className="p-6">

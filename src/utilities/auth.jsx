@@ -35,6 +35,27 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const signup = async (data) => {
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const res = await response.json();
+
+      if (response.ok) {
+        navigate("/login");
+        return;
+      }
+      throw new Error(res.message || "Authentication failed");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const logOut = () => {
     setUser(null);
     setToken("");
@@ -44,7 +65,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, user, loginAction, logOut }}>
+    <AuthContext.Provider value={{ token, user, loginAction, logOut, signup }}>
       {children}
     </AuthContext.Provider>
   );

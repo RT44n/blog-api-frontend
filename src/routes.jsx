@@ -4,6 +4,7 @@ import ErrorPage from "./components/ErrorPage";
 import { Signin } from "./components/Signin";
 import AuthProvider from "./utilities/auth";
 import { WritePost } from "./components/WritePage";
+import { Signup } from "./components/Signup";
 
 const routes = [
   {
@@ -41,6 +42,15 @@ const routes = [
       </AuthProvider>
     ),
     errorElement: <ErrorPage />,
+  },
+
+  {
+    path: "signup",
+    element: (
+      <AuthProvider>
+        <Signup></Signup>
+      </AuthProvider>
+    ),
   },
 ];
 
