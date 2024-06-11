@@ -2,9 +2,20 @@ import { TbShare3 } from "react-icons/tb";
 import { MdModeEditOutline } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export const PostCard = ({ author, date, title, text, tag, status, _id }) => {
+  const [showDialog, setShowDialog] = useState(false);
   const navigate = useNavigate();
+  const handleDeleteClick = () => {
+    setShowDialog(true);
+  };
+
+  const handleConfirmDelete = () => {};
+
+  const handleCancelDelete = () => {
+    setShowDialog(false);
+  };
 
   const handleEditClick = async (id) => {
     try {
@@ -52,12 +63,30 @@ export const PostCard = ({ author, date, title, text, tag, status, _id }) => {
             onClick={() => handleEditClick(_id)}
             className="h-5 w-5 cursor-pointer"
           />
-          <MdDelete />
-          <dialog>
-            <p>Are you sure you want to Delete this post?</p>
-            <button>Yes</button>
-            <button>No</button>
-          </dialog>
+          <MdDelete onClick={handleDeleteClick} />
+          {showDialog && (
+            <dialog className=" mx-auto overflow-y-auto flex items-center justify-center backdrop-filter backdrop-blur-sm">
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <p className="text-lg font-semibold mb-4">
+                  Are you sure you want to delete this post?
+                </p>
+                <div className="flex justify-center space-x-4">
+                  <button
+                    onClick={handleConfirmDelete}
+                    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={handleCancelDelete}
+                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400"
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </dialog>
+          )}
         </div>
       </div>
     </div>
