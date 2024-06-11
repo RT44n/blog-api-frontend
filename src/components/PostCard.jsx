@@ -1,6 +1,6 @@
 import { TbShare3 } from "react-icons/tb";
 import { MdModeEditOutline } from "react-icons/md";
-import { SlOptionsVertical } from "react-icons/sl";
+import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 export const PostCard = ({ author, date, title, text, tag, status, _id }) => {
@@ -52,10 +52,11 @@ export const PostCard = ({ author, date, title, text, tag, status, _id }) => {
             onClick={() => handleEditClick(_id)}
             className="h-5 w-5 cursor-pointer"
           />
-          <SlOptionsVertical className="h-5 w-5" />
+          <MdDelete />
           <dialog>
-            <p>Delete</p>
-            <p>Show on blog</p>
+            <p>Are you sure you want to Delete this post?</p>
+            <button>Yes</button>
+            <button>No</button>
           </dialog>
         </div>
       </div>
