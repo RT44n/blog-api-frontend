@@ -18,7 +18,7 @@ const routes = [
   },
 
   {
-    path: "Login",
+    path: "signin",
     element: (
       <AuthProvider>
         <Signin />
@@ -26,7 +26,7 @@ const routes = [
     ),
   },
   {
-    path: "Edit/:id",
+    path: "edit/:id",
     element: (
       <AuthProvider>
         <EditPost></EditPost>
@@ -35,7 +35,7 @@ const routes = [
     errorElement: <ErrorPage />,
   },
   {
-    path: "Write",
+    path: "write",
     element: (
       <AuthProvider>
         <WritePost></WritePost>

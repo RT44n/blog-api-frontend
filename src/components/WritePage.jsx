@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../utilities/auth";
 
 export const WritePost = () => {
   const navigate = useNavigate();
@@ -10,20 +9,27 @@ export const WritePost = () => {
   //const [status, setStatus] = useState("");
   const [error, setError] = useState(null);
 
-  const user = useAuth();
+  const user = localStorage.getItem("user");
 
   const handleSubmitEvent = async (e) => {
-    console.log(e.target.value);
     e.preventDefault();
+    let status = "Public";
+    if (e.target.id === "save") {
+      status = "Private";
+    }
     try {
-      const response = await fetch(`http://localhost:3000/api/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ title, text, status: "Public" }),
-      });
+      const response = await fetch(
+        `https://blog-api-4xwl.onrender.com/api/posts`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+
+          body: JSON.stringify({ title, text, status }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -45,18 +51,22 @@ export const WritePost = () => {
       {error && <p style={{ color: "red" }}>{error.message}</p>}
       <div className="flex justify-between items-center mb-4">
         <p className="text-gray-700">Draft as {user}</p>
-        <button
-          onClick={handleSubmitEvent}
-          className="bg-lime-800 text-white font-bold py-2 px-4 rounded-full"
-        >
-          Publish
-        </button>
-        <button
-          onClick={handleSubmitEvent}
-          className="bg-lime-800 text-white font-bold py-2 px-4 rounded-full"
-        >
-          Save
-        </button>
+        <div className="space-x-2">
+          <button
+            id="publish"
+            onClick={handleSubmitEvent}
+            className="bg-lime-800 text-white font-bold py-2 px-4 rounded-full"
+          >
+            Publish
+          </button>
+          <button
+            onClick={handleSubmitEvent}
+            id="save"
+            className="bg-lime-800 text-white font-bold py-2 px-4 rounded-full"
+          >
+            Save
+          </button>
+        </div>
       </div>
       <form>
         <div className="mb-4">

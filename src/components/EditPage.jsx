@@ -15,14 +15,17 @@ export const EditPost = () => {
     e.preventDefault();
     try {
       const id = post._id;
-      const response = await fetch(`http://localhost:3000/api/posts/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ title, text }),
-      });
+      const response = await fetch(
+        `https://blog-api-4xwl.onrender.com/api/posts/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ title, text }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
