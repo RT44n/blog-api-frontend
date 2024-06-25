@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
       const res = await response.json();
 
       if (response.ok) {
-        navigate("/login");
+        navigate("/signin");
         return;
       }
       throw new Error(res.message || "Authentication failed");

@@ -9,7 +9,7 @@ export const Menu = () => {
     <div className="flex flex-row items-center space-x-8">
       <div
         onClick={() => {
-          navigate("/Write");
+          navigate("/write");
         }}
         className="flex flex-row items-center space-x-2 cursor-pointer "
       >

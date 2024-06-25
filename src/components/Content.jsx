@@ -25,7 +25,7 @@ export const Content = () => {
           );
           if (!response.ok) {
             if (response.status === 401) {
-              navigate("/login");
+              navigate("/signin");
               return;
             }
             const errorData = await response.json();

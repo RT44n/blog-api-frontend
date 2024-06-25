@@ -5,7 +5,7 @@ import { useAuth } from "../utilities/auth";
 
 function Dashboard() {
   const user = useAuth();
-  if (!user.token) return <Navigate to="/login" />;
+  if (!user.token) return <Navigate to="/signin" />;
   return (
     <>
       <Header />

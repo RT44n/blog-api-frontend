@@ -64,7 +64,7 @@ export const PostCard = ({ author, date, title, text, tag, status, _id }) => {
       }
 
       const postData = await response.json();
-      navigate(`/Edit/${id}`, { state: { post: postData } });
+      navigate(`/edit/${id}`, { state: { post: postData } });
     } catch (error) {
       console.error("Error fetching post data:", error.message);
     }
