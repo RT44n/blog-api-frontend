@@ -57,7 +57,7 @@ export const Content = () => {
       ) : (
         <>
           {posts.map((post) => (
-            <PostCard key={post.title} {...post} />
+            <PostCard key={post._id} {...post} />
           ))}
         </>
       )}

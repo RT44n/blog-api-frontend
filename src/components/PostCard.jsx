@@ -4,6 +4,13 @@ import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 
+const convertTimestamp = (timestamp) => {
+  const date = new Date(timestamp);
+  const localDate = date.toLocaleDateString();
+  const localTime = date.toLocaleTimeString();
+  return `${localDate} ${localTime}`;
+};
+
 export const PostCard = ({ author, date, title, text, tag, status, _id }) => {
   const [showDialog, setShowDialog] = useState(false);
   const navigate = useNavigate();
@@ -79,7 +86,7 @@ export const PostCard = ({ author, date, title, text, tag, status, _id }) => {
           alt="User Avatar"
         />
         <p>{author.username}</p>
-        <p className="text-slate-700">{date}</p>
+        <p className="text-slate-700">{convertTimestamp(date)}</p>
         <p>{status}</p>
       </div>
       <div className="py-2">
