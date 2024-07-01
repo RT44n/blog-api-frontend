@@ -14,7 +14,7 @@ export const Menu = () => {
         className="flex flex-row items-center space-x-2 cursor-pointer "
       >
         <TfiWrite className="h-5 w-5"></TfiWrite>
-        <p>Write</p>
+        <p className="py-6">Write</p>
       </div>
       <IoNotificationsOutline className="h-6 w-6"></IoNotificationsOutline>
       <ProfileImage></ProfileImage>

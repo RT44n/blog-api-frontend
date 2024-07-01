@@ -7,15 +7,28 @@ export const Signup = () => {
     firstname: "",
     password: "",
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState({});
   const auth = useAuth();
 
   const handleSubmitEvent = (e) => {
     e.preventDefault();
-    if (input.username === "" || input.password === "") {
-      setError("Please provide a valid input.");
+    const newErrors = {};
+
+    if (!input.username || input.username.length < 6) {
+      newErrors.username = "Username must be at least 6 characters long.";
+    }
+    if (!input.firstname || input.firstname.length < 6) {
+      newErrors.firstname = "Firstname must be at least 6 characters long.";
+    }
+    if (!input.password || input.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters long.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setError(newErrors);
       return;
     }
+
     auth.signup(input);
   };
 
@@ -25,7 +38,10 @@ export const Signup = () => {
       ...prev,
       [name]: value,
     }));
-    setError("");
+    setError((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
   };
 
   return (
@@ -47,13 +63,17 @@ export const Signup = () => {
               id="username"
               name="username"
               placeholder="Dave52"
+              value={input.username}
               onChange={handleInput}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                error.username ? "border-red-500" : ""
+              }`}
+              required
+              minLength={6}
             />
-            <div id="username" className="sr-only">
-              Please enter a valid username. It must contain at least 6
-              characters.
-            </div>
+            {error.username && (
+              <p className="text-red-500 text-xs italic">{error.username}</p>
+            )}
           </div>
           <div className="form_control">
             <label
@@ -67,13 +87,17 @@ export const Signup = () => {
               id="firstname"
               name="firstname"
               placeholder="Dave"
+              value={input.firstname}
               onChange={handleInput}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                error.firstname ? "border-red-500" : ""
+              }`}
+              required
+              minLength={6}
             />
-            <div id="firstname" className="sr-only">
-              Please enter a valid firstname. It must contain at least 6
-              characters.
-            </div>
+            {error.firstname && (
+              <p className="text-red-500 text-xs italic">{error.firstname}</p>
+            )}
           </div>
           <div className="form_control">
             <label
@@ -86,14 +110,20 @@ export const Signup = () => {
               type="password"
               id="password"
               name="password"
+              value={input.password}
               onChange={handleInput}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
+                error.password ? "border-red-500" : ""
+              }`}
+              required
+              minLength={6}
             />
-            <div id="user-password" className="sr-only">
-              Your password should be more than 6 characters.
-            </div>
+            {error.password && (
+              <span className="text-red-500 text-xs italic">
+                {error.password}
+              </span>
+            )}
           </div>
-          {error && <p className="text-red-500 text-xs italic">{error}</p>}
           <div className="flex items-center justify-between">
             <button
               type="submit"

@@ -3,12 +3,9 @@ import { describe, it, expect, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 
 import { PostCard } from "../src/components/PostCard";
-
-// Mocking react-router-dom's useNavigate hook
-const mockedUsedNavigate = jest.fn();
-
-vi.mock('react-router-dom', () => ({
-   ...vi.importActual('react-router-dom') as any,
+const mockedUsedNavigate = vi.fn();
+vi.mock("react-router-dom", () => ({
+  ...vi.requireActual("react-router-dom"),
   useNavigate: () => mockedUsedNavigate,
 }));
 
@@ -54,18 +51,22 @@ describe("PostCard Component", () => {
   });
 
   it("calls the handleEditClick function when edit icon is clicked", () => {
+    const mockNavigate = vi.fn();
+    vi.mocked(mockedUsedNavigate).mockReturnValue(mockNavigate);
+
     render(
       <MemoryRouter>
         <PostCard {...mockPost} />
       </MemoryRouter>
     );
 
-    expect(screen.getByTestId("delete5")).toBeInTheDocument();
-    const editIcon = screen.getByTestId("delete5");
+    const editIcon = screen.getByTestId("edit");
     fireEvent.click(editIcon);
-    console.log(mockNavigate);
 
-    expect(mockNavigate).toHaveBeenCalledOnce();
+    expect(mockNavigate).toHaveBeenCalledWith(
+      `/Edit/${mockPost._id}`, // Corrected this line
+      expect.anything()
+    );
   });
 
   it("closes the delete confirmation dialog when cancel button is clicked", () => {
@@ -78,7 +79,7 @@ describe("PostCard Component", () => {
     const deleteIcon = screen.getByTestId("delete");
     fireEvent.click(deleteIcon);
 
-    const cancelButton = screen.getByTestId("cancelButton");
+    const cancelButton = screen.getByRole("button", { name: /no/i });
     fireEvent.click(cancelButton);
 
     expect(
