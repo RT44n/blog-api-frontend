@@ -1,6 +1,6 @@
 import { Header } from "./Header";
 import { useEffect, useState } from "react";
-import { PostCard } from "./PostCard";
+import { DisplayPostCard } from "./DisplayPostCard";
 import { useAuth } from "../utilities/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -43,7 +43,7 @@ export const Home = () => {
         ) : (
           <>
             {posts.map((post) => (
-              <PostCard key={post._id} {...post} />
+              <DisplayPostCard key={post._id} {...post} />
             ))}
           </>
         )}
