@@ -4,15 +4,19 @@ import { MemoryRouter } from "react-router-dom";
 
 import { PostCard } from "../src/components/PostCard";
 const mockedUsedNavigate = vi.fn();
-vi.mock("react-router-dom", () => ({
-  ...vi.requireActual("react-router-dom"),
-  useNavigate: () => mockedUsedNavigate,
-}));
+
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useNavigate: () => mockedUsedNavigate,
+  };
+});
 
 describe("PostCard Component", () => {
   const mockPost = {
     author: { username: "testuser" },
-    date: "2024-06-11",
+    date: 1718104578.443383, // Pass timestamp as a number
     title: "Test Title",
     text: "This is a test post",
     tag: "TestTag",
@@ -28,7 +32,7 @@ describe("PostCard Component", () => {
     );
 
     expect(screen.getByText(mockPost.author.username)).toBeInTheDocument();
-    expect(screen.getByText(mockPost.date)).toBeInTheDocument();
+    expect(screen.getByText("11/06/2024 1:16:18 PM")).toBeInTheDocument();
     expect(screen.getByText(mockPost.title)).toBeInTheDocument();
     expect(screen.getByText(mockPost.text)).toBeInTheDocument();
     expect(screen.getByText(mockPost.tag)).toBeInTheDocument();
@@ -42,7 +46,6 @@ describe("PostCard Component", () => {
     );
 
     const deleteIcon = screen.getByTestId("delete");
-
     fireEvent.click(deleteIcon);
 
     expect(
@@ -64,7 +67,7 @@ describe("PostCard Component", () => {
     fireEvent.click(editIcon);
 
     expect(mockNavigate).toHaveBeenCalledWith(
-      `/Edit/${mockPost._id}`, // Corrected this line
+      `/Edit/${mockPost._id}`,
       expect.anything()
     );
   });

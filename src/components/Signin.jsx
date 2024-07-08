@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../utilities/auth";
+import { Link } from "react-router-dom";
 
 export const Signin = () => {
   const [input, setInput] = useState({
@@ -45,11 +46,12 @@ export const Signin = () => {
               type="text"
               id="username"
               name="username"
-              placeholder="example@yahoo.com"
+              placeholder="Rahul"
               onChange={handleInput}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              aria-describedby="username-help"
             />
-            <div id="username" className="sr-only">
+            <div id="username-help" className="sr-only">
               Please enter a valid username. It must contain at least 6
               characters.
             </div>
@@ -67,8 +69,9 @@ export const Signin = () => {
               name="password"
               onChange={handleInput}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              aria-describedby="password-help"
             />
-            <div id="user-password" className="sr-only">
+            <div id="password-help" className="sr-only">
               Your password should be more than 6 characters.
             </div>
           </div>
@@ -82,6 +85,12 @@ export const Signin = () => {
             </button>
           </div>
         </form>
+        <div className="py-6">
+          <span>Don't have an account? </span>
+          <Link to="/signup" className="text-blue-500 hover:text-blue-700">
+            Sign Up
+          </Link>
+        </div>
       </div>
     </div>
   );

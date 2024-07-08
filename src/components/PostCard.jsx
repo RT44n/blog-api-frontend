@@ -5,10 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 
 const convertTimestamp = (timestamp) => {
-  const date = new Date(timestamp);
-  const localDate = date.toLocaleDateString();
-  const localTime = date.toLocaleTimeString();
-  return `${localDate} ${localTime}`;
+  const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+  const options = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+    timeZone: "UTC",
+  };
+  return date.toLocaleString("en-GB", options).replace(",", "");
 };
 
 export const PostCard = ({ author, date, title, text, tag, status, _id }) => {
