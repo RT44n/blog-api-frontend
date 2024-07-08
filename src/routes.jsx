@@ -5,6 +5,7 @@ import { Signin } from "./components/Signin";
 import AuthProvider from "./utilities/auth";
 import { WritePost } from "./components/WritePage";
 import { Signup } from "./components/Signup";
+import Dashboard from "./components/Dashboard";
 
 const routes = [
   {
@@ -22,6 +23,14 @@ const routes = [
     element: (
       <AuthProvider>
         <Signin />
+      </AuthProvider>
+    ),
+  },
+  {
+    path: "dashboard",
+    element: (
+      <AuthProvider>
+        <Dashboard></Dashboard>
       </AuthProvider>
     ),
   },

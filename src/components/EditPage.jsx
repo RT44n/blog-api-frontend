@@ -8,11 +8,19 @@ export const EditPost = () => {
   const token = localStorage.getItem("blogToken");
   const [title, setTitle] = useState(post.title);
   const [text, setText] = useState(post.text);
-  const [status, setStatus] = useState(post.status);
   const [error, setError] = useState(null);
 
-  const handleSubmitEvent = async (e) => {
+  const handlePublish = async (e) => {
     e.preventDefault();
+    await handleSubmit("Public");
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    await handleSubmit("Private");
+  };
+
+  const handleSubmit = async (status) => {
     try {
       const id = post._id;
       const response = await fetch(
@@ -23,7 +31,7 @@ export const EditPost = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ title, text }),
+          body: JSON.stringify({ title, text, status }),
         }
       );
 
@@ -47,22 +55,6 @@ export const EditPost = () => {
     <>
       <h1 className="text-3xl font-bold mb-6">Edit Post</h1>
       <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            className="bg-lime-800 text-white font-bold py-2 px-4 rounded-full mr-2"
-          >
-            Publish
-          </button>
-          <button
-            onClick={handleSubmitEvent}
-            type="submit"
-            className="bg-lime-800 text-white font-bold py-2 px-4 rounded-full"
-          >
-            Save
-          </button>
-        </div>
-        {error && <p className="text-red-500 mb-4">{error.message}</p>}
         <form>
           <div className="h-auto mb-6">
             <input
@@ -85,6 +77,23 @@ export const EditPost = () => {
               onChange={(e) => setText(e.target.value)}
             />
           </div>
+          <div className="flex justify-end">
+            <button
+              onClick={handlePublish}
+              type="submit"
+              className="bg-lime-800 text-white font-bold py-2 px-4 rounded-full mr-2"
+            >
+              Publish
+            </button>
+            <button
+              onClick={handleSave}
+              type="submit"
+              className="bg-lime-800 text-white font-bold py-2 px-4 rounded-full"
+            >
+              Save
+            </button>
+          </div>
+          {error && <p className="text-red-500 mt-4">{error.message}</p>}
         </form>
       </div>
     </>
