@@ -11,6 +11,7 @@ const convertTimestamp = (timestamp) => {
 
 export const DisplayBlogPost = () => {
   const [blogPost, setBlogPost] = useState(null);
+  const [blogComments, setBlogComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -25,18 +26,25 @@ export const DisplayBlogPost = () => {
           throw new Error("Invalid post ID");
         }
 
-        console.log(`Fetching data for post ID: ${postId}`);
-
-        const response = await fetch(
+        const postResponse = await fetch(
           `https://blog-api-4xwl.onrender.com/api/posts/${postId}`
         );
-        if (!response.ok) {
+        if (!postResponse.ok) {
           throw new Error("Network response was not ok");
         }
 
-        const data = await response.json();
+        const postData = await postResponse.json();
+        setBlogPost(postData);
 
-        setBlogPost(data);
+        const commentsResponse = await fetch(
+          `https://blog-api-4xwl.onrender.com/api/posts/${postId}/comments`
+        );
+        if (!commentsResponse.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const commentsData = await commentsResponse.json();
+        setBlogComments(commentsData);
 
         setLoading(false);
       } catch (error) {
@@ -75,6 +83,21 @@ export const DisplayBlogPost = () => {
         </div>
         <div className="max-w-2xl w-full mt-8">
           <h2 className="text-2xl font-bold mb-4">Comments</h2>
+          {blogComments.length > 0 ? (
+            blogComments.map((comment) => (
+              <div
+                key={comment.id}
+                className="mb-4 p-4 border border-gray-300 rounded-md"
+              >
+                <p className="text-slate-700">
+                  {comment.author.username} at {convertTimestamp(comment.date)}
+                </p>
+                <p>{comment.text}</p>
+              </div>
+            ))
+          ) : (
+            <p>No comments yet. Be the first to comment!</p>
+          )}
           <input
             name="comment"
             type="text"
