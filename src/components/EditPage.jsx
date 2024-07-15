@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../utilities/auth";
+import { Navigate } from "react-router-dom";
 
 export const EditPost = () => {
+  const user = useAuth();
+
   const location = useLocation();
   const navigate = useNavigate();
   const { post } = location.state;
@@ -49,6 +53,7 @@ export const EditPost = () => {
     } catch (error) {
       setError({ message: error.message });
     }
+    if (!user.token) return <Navigate to="/signin" />;
   };
 
   return (

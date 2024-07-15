@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../utilities/auth";
+import { Navigate } from "react-router-dom";
 
 export const WritePost = () => {
+  const user = useAuth();
   const navigate = useNavigate();
   const token = localStorage.getItem("blogToken");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  //const [status, setStatus] = useState("");
   const [error, setError] = useState(null);
 
-  const user = localStorage.getItem("user");
+  const userName = localStorage.getItem("user");
 
   const handleSubmitEvent = async (e) => {
     e.preventDefault();
@@ -18,6 +20,9 @@ export const WritePost = () => {
       status = "Private";
     }
     try {
+      if (!title.trim() || !text.trim()) {
+        throw new Error("Title and Text cannot be empty");
+      }
       const response = await fetch(
         `https://blog-api-4xwl.onrender.com/api/posts`,
         {
@@ -26,7 +31,6 @@ export const WritePost = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-
           body: JSON.stringify({ title, text, status }),
         }
       );
@@ -46,11 +50,16 @@ export const WritePost = () => {
       setError({ message: error.message });
     }
   };
+
+  if (!user.token) {
+    return <Navigate to="/signin" />;
+  }
+
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6">
       {error && <p style={{ color: "red" }}>{error.message}</p>}
       <div className="flex justify-between items-center mb-4">
-        <p className="text-gray-700">Draft as {user}</p>
+        <p className="text-gray-700">Draft as {userName}</p>
         <div className="space-x-2">
           <button
             id="publish"
