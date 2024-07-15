@@ -18,9 +18,15 @@ export const DisplayPostCard = ({
   _id,
 }) => {
   const navigate = useNavigate();
+  const handleCardClick = (id) => {
+    navigate(`/post/${id}`);
+  };
 
   return (
-    <div className="p-2 max-w-2xl max-h-60 border-b-2">
+    <div
+      onClick={() => handleCardClick(_id)}
+      className="p-2 max-w-2xl max-h-60 border-b-2"
+    >
       <div className="flex flex-row items-center min-h-4 text-sm space-x-2">
         <img
           className="rounded-full max-w-7"

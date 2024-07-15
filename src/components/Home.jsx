@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { DisplayPostCard } from "./DisplayPostCard";
 import { useAuth } from "../utilities/auth";
 import { useNavigate } from "react-router-dom";
+import { DisplayBlogPost } from "./DisplayBlogPost";
 
 export const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -34,6 +35,7 @@ export const Home = () => {
       fetchData();
     }
   }, [navigate]);
+
   return (
     <>
       <Header />

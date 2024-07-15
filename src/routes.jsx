@@ -6,6 +6,7 @@ import AuthProvider from "./utilities/auth";
 import { WritePost } from "./components/WritePage";
 import { Signup } from "./components/Signup";
 import Dashboard from "./components/Dashboard";
+import { DisplayBlogPost } from "./components/DisplayBlogPost";
 
 const routes = [
   {
@@ -58,6 +59,14 @@ const routes = [
     element: (
       <AuthProvider>
         <Signup></Signup>
+      </AuthProvider>
+    ),
+  },
+  {
+    path: "post/:id",
+    element: (
+      <AuthProvider>
+        <DisplayBlogPost></DisplayBlogPost>
       </AuthProvider>
     ),
   },
