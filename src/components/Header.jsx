@@ -11,7 +11,9 @@ export const Header = () => {
 
   return (
     <div className="flex flex-row justify-between min-h-14 border-b px-5">
-      <Logo onClick={handleLogoClick} />
+      <div className="py-3" onClick={handleLogoClick}>
+        <Logo />
+      </div>
       <Menu />
     </div>
   );
