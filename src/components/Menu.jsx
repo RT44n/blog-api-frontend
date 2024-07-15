@@ -18,17 +18,17 @@ export const Menu = () => {
         <TfiWrite className="h-5 w-5"></TfiWrite>
         <p className="py-6">Write</p>
       </div>
-      {!user ? ( // Change this line
-        <p className="py-6">
-          <Link to="/signin">Sign In</Link>
-        </p>
-      ) : (
+      {!user ? (
         <>
           <Link to="/dashboard">Dashboard</Link>
 
           <IoNotificationsOutline className="h-6 w-6"></IoNotificationsOutline>
           <ProfileImage></ProfileImage>
         </>
+      ) : (
+        <p className="py-6">
+          <Link to="/signin">Sign In</Link>
+        </p>
       )}
     </div>
   );
